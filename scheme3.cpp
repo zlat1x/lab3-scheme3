@@ -1,5 +1,6 @@
 #include "scheme3.h"
 #include <syncstream>
+#include <thread>
 #include <iostream>
 
 namespace scheme3 {
@@ -64,6 +65,30 @@ namespace scheme3 {
     }
 
     void pipeline::run() {
+        auto qa = split_even(A), qb = split_even(B), qc = split_even(C),
+             qd = split_even(D), qe = split_even(E), qf = split_even(F),
+             qg = split_even(G), qh = split_even(H), qi = split_even(I),
+             qj = split_even(J);
 
+        auto sa = starts_from_quota(qa), sb = starts_from_quota(qb), sc = starts_from_quota(qc),
+             sd = starts_from_quota(qd), se = starts_from_quota(qe), sf = starts_from_quota(qf),
+             sg = starts_from_quota(qg), sh = starts_from_quota(qh), si = starts_from_quota(qi),
+             sj = starts_from_quota(qj);
+
+
+        std::osyncstream(std::cout) << "Обчислення розпочато.\n";
+        {
+            std::vector<std::jthread> ws;
+            ws.reserve(NT);
+            for (int t = 0; t < NT; ++t) {
+            ws.emplace_back(&pipeline::worker_body, this, t,
+               std::cref(qa), std::cref(sa), std::cref(qb), std::cref(sb),
+               std::cref(qc), std::cref(sc), std::cref(qd), std::cref(sd),
+               std::cref(qe), std::cref(se), std::cref(qf), std::cref(sf),
+               std::cref(qg), std::cref(sg), std::cref(qh), std::cref(sh),
+               std::cref(qi), std::cref(si), std::cref(qj), std::cref(sj));
+            }
+        }
+        std::osyncstream(std::cout) << "Обчислення завершено.\n";
     }
 }
