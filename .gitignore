@@ -13,6 +13,12 @@ compile_commands.json
 # VS Code
 .vscode/
 
+# Binaries and local output
+*.exe
+*.out
+*.obj
+results.txt
+
 # OS junk
 .DS_Store
 Thumbs.db
