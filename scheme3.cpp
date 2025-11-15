@@ -7,6 +7,19 @@ namespace scheme3 {
           i_done(I), j_done(J),
           ef_done(E + F), gh_done(G + H) {}
 
+    std::vector<int> pipeline::split_even(int N) {
+        std::vector<int> q(NT, N / NT);
+        for (int t = 0; t < (N % NT); ++t) q[t] += 1;
+        return q;
+    }
+
+    std::vector<int> pipeline::starts_from_quota(const std::vector<int>& q) {
+        std::vector<int> s(NT, 1);
+        int run = 1;
+        for (int t = 0; t < NT; ++t) { s[t] = run; run +=q[t]; }
+        return s;
+    }
+
     void pipeline::run() {
 
     }

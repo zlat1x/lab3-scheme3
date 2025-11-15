@@ -1,6 +1,7 @@
 #pragma once
 
 #include <latch>
+#include <vector>
 
 namespace scheme3 {
     inline constexpr int NT = 5;
@@ -12,8 +13,12 @@ namespace scheme3 {
         std::latch e_done, f_done, g_done, h_done;
         std::latch i_done, j_done;
         std::latch ef_done, gh_done;
-        
+
         pipeline();
         void run();
+
+        private:
+        static std::vector<int> split_even(int N);
+        static std::vector<int> starts_from_quota(const std::vector<int>& q);
     };
 }
